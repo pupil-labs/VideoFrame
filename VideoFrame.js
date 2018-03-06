@@ -237,6 +237,11 @@ VideoFrame.prototype.seekTo = function(config) {
 	}
 
 	switch(option) {
+		case 'pupil_format':
+			var [m, t] = obj[option].split(':')
+			var [s, u] = t.split('.')
+			seekTime = (Number(String( ((Number(m)*60) + (Number(s)) ) + u)) / 1000) + 0.001
+			break;
 		case 'frame':
 			SMPTE = this.toSMPTE(obj[option]);
 			seekTime = ((this.toMilliseconds(SMPTE) / 1000) + 0.001);
@@ -248,7 +253,7 @@ VideoFrame.prototype.seekTo = function(config) {
 			seekTime = ((Number(obj[option]) / 1000) + 0.001);
 			break;
 	}
-	
+
 	if (!isNaN(seekTime)) {
 		this.video.currentTime = seekTime;
 	}
